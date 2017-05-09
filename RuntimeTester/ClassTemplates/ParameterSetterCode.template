@@ -1,0 +1,11 @@
+import runtimeTester.IParameterSetter;
+import runtimeTester.EnvironmentVariableStorage;
+
+public class __CLASS__NAME__HERE__ implements IParameterSetter
+{
+	@Override
+	public Object getParameter(EnvironmentVariableStorage environmentVariableStorage)
+	{
+		return __CODE___HERE__;
+	}
+}

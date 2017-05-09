@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="1000.0" prefWidth="1777.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runtimeTester.RuntimeTesterGUIController">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onMenuItemExport" text="Export" />
+              <MenuItem mnemonicParsing="false" text="Close">
+                     <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onMenuItemAddVarAction" text="Add new Variable" />
+              <MenuItem mnemonicParsing="false" onAction="#onMenuItemDelVarAction" text="Delete Variable" />
+                  <MenuItem mnemonicParsing="false" onAction="#onMenuItemModVarAction" text="Modify Variable" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button mnemonicParsing="false" onAction="#onTtoolBarBtnAddVarAction" text="Add new Variable" />
+            <Button mnemonicParsing="false" onAction="#onTtoolBarBtnDelVarAction" text="Delete Variable" />
+            <Button mnemonicParsing="false" onAction="#onTtoolBarBtnModVarAction" text="Modify Variable" />
+        </items>
+      </ToolBar>
+      <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="0.0">
+               <children>
+                  <VBox layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <children>
+                        <LineChart fx:id="resultChart" animated="false" title="Results" VBox.vgrow="ALWAYS">
+                          <xAxis>
+                            <NumberAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <AnchorPane>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <children>
+                              <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <Button fx:id="btnRunTest" disable="true" mnemonicParsing="false" onAction="#onBtnRunTestAction" text="Run Test" />
+                                    <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label fx:id="progressLabel" text="Label" />
+                                          <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <SplitPane dividerPositions="0.4" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                        <SplitPane dividerPositions="0.66" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <VBox alignment="BOTTOM_RIGHT" layoutX="278.0" layoutY="621.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                       <children>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label maxHeight="1.7976931348623157E308" text="Iterations" />
+                                                <AnchorPane HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                   <children>
+                                                      <Spinner fx:id="spinnerIterations" editable="true" AnchorPane.rightAnchor="0.0">
+                                                         <tooltip>
+                                                            <Tooltip text="The precision determines how many calculations will be done each step to calculate an average of the time it took." wrapText="true" />
+                                                         </tooltip>
+                                                      </Spinner>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </HBox>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label maxHeight="1.7976931348623157E308" text="Precision" />
+                                                <AnchorPane HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                   <children>
+                                                      <Spinner fx:id="spinnerPrecision" editable="true" AnchorPane.rightAnchor="0.0">
+                                                         <tooltip>
+                                                            <Tooltip text="The precision determines how many calculations will be done each step to calculate an average of the time it took." wrapText="true" />
+                                                         </tooltip>
+                                                      </Spinner>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <AnchorPane layoutX="148.0" layoutY="228.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <VBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                             <children>
+                                                <GridPane hgap="10.0" vgap="10.0">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <TextField fx:id="txtFieldClassFile" editable="false" prefWidth="149.0" promptText="No folder selected" />
+                                                      <Button mnemonicParsing="false" onAction="#onBtnSelectNewClassAction" text="Select class folder" GridPane.rowIndex="1" />
+                                                   </children>
+                                                </GridPane>
+                                                <TextField fx:id="txtFieldClassName" onAction="#onTxtFieldClassNameAction" promptText="Enter fully qualified class name">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Separator prefWidth="200.0" />
+                                                <VBox fx:id="vBoxSelectedClassParams" alignment="TOP_RIGHT" disable="true" spacing="10.0">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <ChoiceBox fx:id="choiceBoxSelectMethod" prefWidth="250.0" />
+                                                      <VBox fx:id="vBoxSelectedMethodParams" alignment="TOP_RIGHT" spacing="10.0" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <TabPane layoutX="10.0" layoutY="10.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                       <tabs>
+                                          <Tab text="Incrementation Phase Code">
+                                             <content>
+                                                <TextArea fx:id="txtAreaIncrementationPhaseCode" prefHeight="200.0" prefWidth="200.0" wrapText="true">
+                                                   <tooltip>
+                                                      <Tooltip text="This code will be run each time before the next iteration during testing." wrapText="true" />
+                                                   </tooltip>
+                                                </TextArea>
+                                             </content>
+                                          </Tab>
+                                          <Tab text="Pre Run Phase Code">
+                                             <content>
+                                                <TextArea fx:id="txtAreaPreRunPhaseCode" prefHeight="200.0" prefWidth="200.0">
+                                                   <tooltip>
+                                                      <Tooltip text="This code will be run each time before the next single test during testing." />
+                                                   </tooltip>
+                                                </TextArea>
+                                             </content>
+                                          </Tab>
+                                       </tabs>
+                                    </TabPane>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
+                           <children>
+                              <TableView fx:id="tableEnvVariables" onKeyReleased="#onTableKeyReleased" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                  <TableColumn fx:id="tableColumnDatatype" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="150.0" text="Datatype" />
+                                    <TableColumn fx:id="tableColumnName" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="150.0" text="Name" />
+                                    <TableColumn fx:id="tableColumnValue" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="150.0" text="Value" />
+                                 </columns>
+                              </TableView>
+                              <HBox spacing="10.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#onBtnEnvVarAddAction" text="Add new Variable" />
+                                    <Button mnemonicParsing="false" onAction="#onBtnEnvVarDelAction" text="Delete Variable" />
+                                    <Button mnemonicParsing="false" onAction="#onBtnEnvVarModAction" text="Modify Variable" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</VBox>

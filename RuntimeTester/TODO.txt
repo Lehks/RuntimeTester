@@ -1,0 +1,24 @@
+-Proper Exception Handling
+-Allow to show all the single charts for the precision-tests (not just the average)
+-Enhance Chart Data Tooltips (-> Show result of single tests)
+====Implement Del/Mod buttons for EnvVar
+====Allow editing of the Value of a variable in EnvVar
+-Greatly increase script language for user input code (Simpler calculations,
+allow imports)
+-Fix table to show columns correctly
+-Allow saving the state of a test (save user codes, loaded class, EnvVar)
+====Allow exporting results into a stream
+-Code Cleanup: e.g. let listeners call other methods, no logic in listeners, externalize constants
+-Use EnvVar to store variables like max iterations, current iterations etc.
+-Add functionality to call any constructor for the class containing the method to
+test
+-Add items to tool bar / menu bar (2ndary controls for EnvVar etc.)
+-Add doc
+-Manage absence of necessary files (*.fxml, *.template)
+====Change UserInputProcessor to allow exporting to other directories than "classes/"
+-Enhance Compiler: if .getSystemCompiler() returns null, search for javac and
+execute it (and allow to provide a custom path to javac)
+-Add dialog if addVar has failed
+====Allow deleting of selected variables from EnvVar via Delete
+-Add context menu to EnvVar rows
+-Add error dialogs

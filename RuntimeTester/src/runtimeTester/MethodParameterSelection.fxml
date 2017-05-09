@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+
+
+<HBox alignment="CENTER_LEFT" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="runtimeTester.MethodParameterSelectorController">
+   <children>
+      <Label fx:id="lblDatatype" text="Datatype name =" />
+      <TextField fx:id="txtFieldValue" promptText="Parameter Value" HBox.hgrow="ALWAYS" />
+   </children>
+</HBox>

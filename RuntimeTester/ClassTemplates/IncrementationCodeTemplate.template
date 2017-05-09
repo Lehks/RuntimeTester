@@ -1,0 +1,13 @@
+import runtimeTester.EnvironmentVariableStorage;
+import runtimeTester.IIncrementationPhase;
+
+public class __CLASS__NAME__HERE__ implements IIncrementationPhase
+{
+	@Override
+    public void increment(Object customObj)
+    {
+    	EnvironmentVariableStorage environmentVariableStorage = (EnvironmentVariableStorage) customObj;
+    	
+        __CODE___HERE__
+    }
+}
