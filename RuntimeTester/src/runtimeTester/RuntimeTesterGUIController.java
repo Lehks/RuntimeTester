@@ -200,8 +200,8 @@ public class RuntimeTesterGUIController
 				new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
 						Integer.MAX_VALUE, 1));
 
-		resultChart.getXAxis().setLabel("Iterations");
-		resultChart.getYAxis().setLabel("Time");
+		resultChart.getXAxis().setLabel(Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_AXIS_X_LABEL);
+		resultChart.getYAxis().setLabel(Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_AXIS_Y_LABEL);
 
 		choiceBoxSelectMethod.valueProperty()
 				.addListener(new ChangeListener<MethodNameBundle>()
@@ -393,7 +393,7 @@ public class RuntimeTesterGUIController
 
 		XYChart.Series<Number, Number> resultAverage = new Series<>();
 
-		resultAverage.setName("Average");
+		resultAverage.setName(Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_GRAPH_AVERAGE_NAME);
 
 		for (int i = 0; i < result.getIterationResults().size(); i++)
 		{
@@ -412,7 +412,7 @@ public class RuntimeTesterGUIController
 			for (XYChart.Data<Number, Number> data : chart.getData())
 			{
 				Tooltip tooltip = new Tooltip(
-						String.format("Time: %dns", data.getYValue()));
+						String.format(Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_DATA_TOOLTIP_TEXT, data.getYValue()));
 
 				Tooltip.install(data.getNode(), tooltip);
 			}
@@ -445,8 +445,8 @@ public class RuntimeTesterGUIController
 	{
 		try
 		{
-			FXMLLoader loader = new FXMLLoader(
-					getClass().getResource("MethodParameterSelection.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass()
+					.getResource(Constants.METHOD_PARAMETER_SELECTION_FXML));
 			HBox node = loader.load();
 
 			MethodParameterSelectorController controller = loader

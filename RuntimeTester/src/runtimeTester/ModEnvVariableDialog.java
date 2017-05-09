@@ -1,6 +1,5 @@
 package runtimeTester;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -28,18 +27,18 @@ public class ModEnvVariableDialog extends Stage
 		this.environmentVariableStorage = environmentVariableStorage;
 		this.entry = entry;
 		this.variableValueProcessor = new UserInputCodeProcessor(
-				Utils.fileToString(new File(
-						"ClassTemplates/ParameterSetterCode.template")),
-				"EnvVariableModValue",
-				RuntimeTesterGUI.USER_INPUT_PROCESSOR_OUTPUT_DIR);
+				Utils.fileToString(
+						Constants.PARAMETER_SETTER_CODE_TEMPLATE_FILE),
+				Constants.MOD_ENV_VAR_DIALOG_SETTER_CLASS_NAME,
+				Constants.USER_INPUT_PROCESSOR_OUTPUT_DIR);
 
 		initOwner(owner);
 		initModality(Modality.WINDOW_MODAL);
 
-		setTitle("Modify Environmental Variable");
+		setTitle(Constants.MOD_ENV_VAR_DIALOG_WINDOW_TITLE);
 
-		FXMLLoader loader = new FXMLLoader(
-				getClass().getResource("ModEnvVariable.fxml.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass()
+				.getResource(Constants.MOD_ENV_VAR_DIALOG_FXML_FILENAME));
 
 		try
 		{

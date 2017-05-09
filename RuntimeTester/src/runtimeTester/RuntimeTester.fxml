@@ -29,7 +29,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="1000.0" prefWidth="1777.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runtimeTester.RuntimeTesterGUIController">
+<VBox prefHeight="1000.0" prefWidth="1777.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runtimeTester.RuntimeTesterGUIController">
    <children>
       <MenuBar>
         <menus>
@@ -88,7 +88,7 @@
                                     <Button fx:id="btnRunTest" disable="true" mnemonicParsing="false" onAction="#onBtnRunTestAction" text="Run Test" />
                                     <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Label fx:id="progressLabel" text="Label" />
+                                          <Label fx:id="progressLabel" text="~" />
                                           <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" />
                                        </children>
                                     </HBox>

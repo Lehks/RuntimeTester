@@ -31,6 +31,6 @@ public class MethodParameterSelectorController
 
 	public void setParameter(Parameter parameter)
 	{
-		lblDatatype.setText(parameter.getType().toString() + " " + parameter.getName() + " =");
+		lblDatatype.setText(String.format(Constants.METHOD_PARAMETER_SELECTION_LABEL_DATATYPE_TEXT, parameter.getType().toString(), parameter.getName()));
 	}
 }

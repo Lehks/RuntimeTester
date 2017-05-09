@@ -1,6 +1,5 @@
 package runtimeTester;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -29,17 +28,18 @@ public class AddEnvVariableDialog extends Stage
 		this.environmentVariableStorage = environmentVariableStorage;
 
 		variableValueProcessor = new UserInputCodeProcessor(
-				Utils.fileToString(new File(
-						"ClassTemplates/ParameterSetterCode.template")),
-				"EnvVariableAddValue",  RuntimeTesterGUI.USER_INPUT_PROCESSOR_OUTPUT_DIR);
+				Utils.fileToString(
+						Constants.PARAMETER_SETTER_CODE_TEMPLATE_FILE),
+				Constants.ADD_ENV_VAR_DIALOG_SETTER_CLASS_NAME,
+				Constants.USER_INPUT_PROCESSOR_OUTPUT_DIR);
 
 		initModality(Modality.WINDOW_MODAL);
 		initOwner(owner);
 
-		setTitle("Add new Environment Variable");
+		setTitle(Constants.ADD_ENV_VAR_DIALOG_WINDOW_TITLE);
 
-		FXMLLoader loader = new FXMLLoader(
-				getClass().getResource("AddEnvVariable.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass()
+				.getResource(Constants.ADD_ENV_VAR_DIALOG_FXML_FILENAME));
 
 		try
 		{
@@ -70,27 +70,31 @@ public class AddEnvVariableDialog extends Stage
 	{
 		try// TODO error handling
 		{
-			Class<?> valueObjGetterClass = variableValueProcessor.process(value);
-			
-			IParameterSetter setter = (IParameterSetter) valueObjGetterClass.getConstructor().newInstance();
-			
-			boolean addResult = environmentVariableStorage.add(name, setter.getParameter(environmentVariableStorage));
+			Class<?> valueObjGetterClass = variableValueProcessor
+					.process(value);
 
-			result = (addResult ? EnvironmentVariableModificationResult.SUCCESS : EnvironmentVariableModificationResult.ALREADY_PRESENT);
+			IParameterSetter setter = (IParameterSetter) valueObjGetterClass
+					.getConstructor().newInstance();
+
+			boolean addResult = environmentVariableStorage.add(name,
+					setter.getParameter(environmentVariableStorage));
+
+			result = (addResult ? EnvironmentVariableModificationResult.SUCCESS
+					: EnvironmentVariableModificationResult.ALREADY_PRESENT);
 		}
 		catch (FileNotFoundException | CompilationErrorException e)
 		{
-			if(e instanceof CompilationErrorException)
+			if (e instanceof CompilationErrorException)
 			{
 				CompilationErrorException e1 = (CompilationErrorException) e;
-				
-				for(Diagnostic<? extends JavaFileObject> d: e1.getErrors())
+
+				for (Diagnostic<? extends JavaFileObject> d : e1.getErrors())
 				{
 					System.out.println(d);
 				}
-					
+
 			}
-			
+
 			result = EnvironmentVariableModificationResult.COMPILE_ERROR;
 			e.printStackTrace();
 		}

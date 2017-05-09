@@ -15,6 +15,7 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 import exception.CompilationErrorException;
+import runtimeTester.Constants;
 
 public class StringCompiler
 {
@@ -32,7 +33,7 @@ public class StringCompiler
 		StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnosticCollector, null, null);
 		
 		if(!outputDirectory.isDirectory())
-			throw new FileNotFoundException("File is not a directory");
+			throw new FileNotFoundException(Constants.ERROR_FILE_IS_NOT_DIRECTORY);
 
 		if(!outputDirectory.exists())
 			outputDirectory.mkdirs();
