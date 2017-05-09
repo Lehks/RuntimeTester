@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
@@ -13,6 +15,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import utils.Utils;
 
@@ -124,7 +128,7 @@ public class RuntimeTesterGUI extends Application
 		return primaryStage;
 	}
 
-	public void updatePreRunCode(String userInput)
+	public boolean updatePreRunCode(String userInput)
 	{
 		try
 		{
@@ -139,39 +143,43 @@ public class RuntimeTesterGUI extends Application
 		catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (CompilationErrorException e)
 		{
-			for (Diagnostic<? extends JavaFileObject> d : e.getErrors())
-			{
-				System.out.println(d);
-			}
-
-			e.printStackTrace();
+			showCompilationError(e.getErrors());
+			return false;
 		}
 		catch (InstantiationException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (IllegalAccessException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (IllegalArgumentException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (InvocationTargetException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (SecurityException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
+		
+		return true;
 	}
 
-	public void updateIncrementationCode(String userInput)
+	public boolean updateIncrementationCode(String userInput)
 	{
 		try
 		{
@@ -186,39 +194,43 @@ public class RuntimeTesterGUI extends Application
 		catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (CompilationErrorException e)
 		{
-			for (Diagnostic<? extends JavaFileObject> d : e.getErrors())
-			{
-				System.out.println(d);
-			}
-
-			e.printStackTrace();
+			showCompilationError(e.getErrors());
+			return false;
 		}
 		catch (InstantiationException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (IllegalAccessException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (IllegalArgumentException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (InvocationTargetException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 		catch (SecurityException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
+		
+		return true;
 	}
 
-	public void updateRuntimeTesterParameters(ArrayList<String> parameters)
+	public boolean updateRuntimeTesterParameters(ArrayList<String> parameters)
 	{
 		runtimeTesterParameter.clear();
 
@@ -242,34 +254,37 @@ public class RuntimeTesterGUI extends Application
 			}
 			catch (CompilationErrorException e)
 			{
-				for (Diagnostic<? extends JavaFileObject> d : e.getErrors())
-				{
-					System.out.println(d);
-				}
-
-				e.printStackTrace();
+				showCompilationError(e.getErrors());
+				return false;
 			}
 			catch (InstantiationException e)
 			{
 				e.printStackTrace();
+				return false;
 			}
 			catch (IllegalAccessException e)
 			{
 				e.printStackTrace();
+				return false;
 			}
 			catch (IllegalArgumentException e)
 			{
 				e.printStackTrace();
+				return false;
 			}
 			catch (InvocationTargetException e)
 			{
 				e.printStackTrace();
+				return false;
 			}
 			catch (SecurityException e)
 			{
 				e.printStackTrace();
+				return false;
 			}
 		}
+
+		return true;
 	}
 
 	public EnvironmentVariableStorage getEnvironmentVariableStorage()
@@ -297,6 +312,26 @@ public class RuntimeTesterGUI extends Application
 		this.loadedMethod = loadedMethod;
 	}
 
+	public void showCompilationError(List<Diagnostic<? extends JavaFileObject>> errorList)
+	{
+		Alert alert = new Alert(AlertType.ERROR);
+		
+		alert.setTitle("Compilation Error");
+		alert.setHeaderText("A critical compilation error has occured.");
+		
+		StringBuilder errorTextBuilder = new StringBuilder();
+		
+		for(Diagnostic<? extends JavaFileObject> diagnostic: errorList)
+		{
+			errorTextBuilder.append(diagnostic.getMessage(Locale.getDefault()));
+			errorTextBuilder.append("\n\n");
+		}
+		
+		alert.setContentText(errorTextBuilder.toString());
+		
+		alert.showAndWait();
+	}
+	
 	public static void main(String[] args)
 	{
 		launch(args);

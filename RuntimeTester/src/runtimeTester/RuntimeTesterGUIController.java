@@ -200,8 +200,10 @@ public class RuntimeTesterGUIController
 				new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
 						Integer.MAX_VALUE, 1));
 
-		resultChart.getXAxis().setLabel(Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_AXIS_X_LABEL);
-		resultChart.getYAxis().setLabel(Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_AXIS_Y_LABEL);
+		resultChart.getXAxis().setLabel(
+				Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_AXIS_X_LABEL);
+		resultChart.getYAxis().setLabel(
+				Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_AXIS_Y_LABEL);
 
 		choiceBoxSelectMethod.valueProperty()
 				.addListener(new ChangeListener<MethodNameBundle>()
@@ -244,7 +246,7 @@ public class RuntimeTesterGUIController
 		try
 		{
 			AddEnvVariableDialog dialog = new AddEnvVariableDialog(
-					runtimeTesterGui.getPrimaryStage(),
+					runtimeTesterGui,
 					runtimeTesterGui.getEnvironmentVariableStorage());
 
 			dialog.showDialog();
@@ -275,7 +277,7 @@ public class RuntimeTesterGUIController
 			try
 			{
 				ModEnvVariableDialog dialog = new ModEnvVariableDialog(
-						runtimeTesterGui.getPrimaryStage(),
+						runtimeTesterGui,
 						runtimeTesterGui.getEnvironmentVariableStorage(),
 						entry);
 
@@ -305,11 +307,22 @@ public class RuntimeTesterGUIController
 			parameters.add(controller.getTextFieldValue());
 		}
 
-		runtimeTesterGui.updateRuntimeTesterParameters(parameters);
+		if (!runtimeTesterGui.updateRuntimeTesterParameters(parameters))
+		{
+			return;
+		}
 
-		runtimeTesterGui.updatePreRunCode(txtAreaPreRunPhaseCode.getText());
-		runtimeTesterGui.updateIncrementationCode(
-				txtAreaIncrementationPhaseCode.getText());
+		if (!runtimeTesterGui
+				.updatePreRunCode(txtAreaPreRunPhaseCode.getText()))
+		{
+			return;
+		}
+
+		if (!runtimeTesterGui.updateIncrementationCode(
+				txtAreaIncrementationPhaseCode.getText()))
+		{
+			return;
+		}
 
 		updateProgressBar(0.0f);
 
@@ -393,7 +406,8 @@ public class RuntimeTesterGUIController
 
 		XYChart.Series<Number, Number> resultAverage = new Series<>();
 
-		resultAverage.setName(Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_GRAPH_AVERAGE_NAME);
+		resultAverage.setName(
+				Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_GRAPH_AVERAGE_NAME);
 
 		for (int i = 0; i < result.getIterationResults().size(); i++)
 		{
@@ -411,8 +425,9 @@ public class RuntimeTesterGUIController
 		{
 			for (XYChart.Data<Number, Number> data : chart.getData())
 			{
-				Tooltip tooltip = new Tooltip(
-						String.format(Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_DATA_TOOLTIP_TEXT, data.getYValue()));
+				Tooltip tooltip = new Tooltip(String.format(
+						Constants.RUNTIME_TESTER_GUI_CONTROLLER_CHART_DATA_TOOLTIP_TEXT,
+						data.getYValue()));
 
 				Tooltip.install(data.getNode(), tooltip);
 			}

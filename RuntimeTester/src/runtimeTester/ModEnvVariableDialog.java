@@ -14,16 +14,18 @@ import utils.Utils;
 
 public class ModEnvVariableDialog extends Stage
 {
+	private RuntimeTesterGUI runtimeTesterGui;
 	private EnvironmentVariableStorage environmentVariableStorage;
 	private EnvironmentVariableStorage.StorageEntry entry;
 	private UserInputCodeProcessor variableValueProcessor;
 	private EnvironmentVariableModificationResult result = EnvironmentVariableModificationResult.CANCELED;
 
-	public ModEnvVariableDialog(Stage owner,
+	public ModEnvVariableDialog(RuntimeTesterGUI runtimeTesterGui,
 			EnvironmentVariableStorage environmentVariableStorage,
 			EnvironmentVariableStorage.StorageEntry entry)
 			throws FileNotFoundException
 	{
+		this.runtimeTesterGui = runtimeTesterGui;
 		this.environmentVariableStorage = environmentVariableStorage;
 		this.entry = entry;
 		this.variableValueProcessor = new UserInputCodeProcessor(
@@ -32,7 +34,7 @@ public class ModEnvVariableDialog extends Stage
 				Constants.MOD_ENV_VAR_DIALOG_SETTER_CLASS_NAME,
 				Constants.USER_INPUT_PROCESSOR_OUTPUT_DIR);
 
-		initOwner(owner);
+		initOwner(runtimeTesterGui.getPrimaryStage());
 		initModality(Modality.WINDOW_MODAL);
 
 		setTitle(Constants.MOD_ENV_VAR_DIALOG_WINDOW_TITLE);
@@ -86,7 +88,8 @@ public class ModEnvVariableDialog extends Stage
 		}
 		catch (CompilationErrorException e)
 		{
-			e.printStackTrace();
+			runtimeTesterGui.showCompilationError(e.getErrors());
+			result = EnvironmentVariableModificationResult.COMPILE_ERROR;
 		}
 		catch (InstantiationException e)
 		{

@@ -4,9 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import javax.tools.Diagnostic;
-import javax.tools.JavaFileObject;
-
 import exception.CompilationErrorException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,11 +17,13 @@ public class AddEnvVariableDialog extends Stage
 	private EnvironmentVariableStorage environmentVariableStorage;
 	private UserInputCodeProcessor variableValueProcessor;
 	private EnvironmentVariableModificationResult result = EnvironmentVariableModificationResult.CANCELED;
-
-	public AddEnvVariableDialog(Stage owner,
+	private RuntimeTesterGUI runtimeTesterGui;
+	
+	public AddEnvVariableDialog(RuntimeTesterGUI runtimeTesterGui,
 			EnvironmentVariableStorage environmentVariableStorage)
 			throws FileNotFoundException
 	{
+		this.runtimeTesterGui = runtimeTesterGui;
 		this.environmentVariableStorage = environmentVariableStorage;
 
 		variableValueProcessor = new UserInputCodeProcessor(
@@ -34,7 +33,7 @@ public class AddEnvVariableDialog extends Stage
 				Constants.USER_INPUT_PROCESSOR_OUTPUT_DIR);
 
 		initModality(Modality.WINDOW_MODAL);
-		initOwner(owner);
+		initOwner(runtimeTesterGui.getPrimaryStage());
 
 		setTitle(Constants.ADD_ENV_VAR_DIALOG_WINDOW_TITLE);
 
@@ -82,21 +81,11 @@ public class AddEnvVariableDialog extends Stage
 			result = (addResult ? EnvironmentVariableModificationResult.SUCCESS
 					: EnvironmentVariableModificationResult.ALREADY_PRESENT);
 		}
-		catch (FileNotFoundException | CompilationErrorException e)
+		catch (CompilationErrorException e)
 		{
-			if (e instanceof CompilationErrorException)
-			{
-				CompilationErrorException e1 = (CompilationErrorException) e;
-
-				for (Diagnostic<? extends JavaFileObject> d : e1.getErrors())
-				{
-					System.out.println(d);
-				}
-
-			}
-
+			runtimeTesterGui.showCompilationError(e.getErrors());
+			
 			result = EnvironmentVariableModificationResult.COMPILE_ERROR;
-			e.printStackTrace();
 		}
 		catch (InstantiationException e)
 		{
@@ -119,6 +108,10 @@ public class AddEnvVariableDialog extends Stage
 			e.printStackTrace();
 		}
 		catch (SecurityException e)
+		{
+			e.printStackTrace();
+		}
+		catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
 		}
